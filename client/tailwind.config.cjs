@@ -5,6 +5,20 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    fontFamily: {
+      satoshiLight: ['Satoshi-Light', 'sans-serif'],
+      satoshiMedium: ['Satoshi-Medium', 'sans-serif'],
+      satoshiRegular: ['Satoshi-Regular', 'sans-serif'],
+    },
+    colors: {
+      transparent: 'transparent',
+      current: 'currentColor',
+      'white': '#ffffff',
+      'violet': '#665DCD',
+      'blue': '#5FA4E6',
+      'gold': '#D2AB67',
+      'black': '#141619',
+    },
     extend: {},
   },
   plugins: [],

@@ -3,8 +3,8 @@ import './App.css'
 const App = () => {
 
   return (
-    <div>
-        <h1 className="text-3xl font-bold underline text-fuchsia-600">
+    <div className="bg-black min-h-screen">
+        <h1 className="text-3xl font-bold underline text-gold">
             Hello world!
         </h1>
     </div>
