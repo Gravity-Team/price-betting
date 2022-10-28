@@ -6,6 +6,7 @@ import { errorHandler } from './middlewares/errorHandler';
 import { notFound } from './middlewares/notFound';
 import path from 'path';
 import * as fs from 'fs';
+import {betRouter} from "./routes/betRoutes";
 
 config();
 
@@ -25,6 +26,8 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.use(express.json());
+
+app.use('/api/bets', betRouter);
 
 app.use(notFound);
 app.use(errorHandler);
