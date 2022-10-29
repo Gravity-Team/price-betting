@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { Form } from '../components/Form';
 import { Chart } from '../components/Chart';
+import { Leaderboard } from '../components/Leaderboard';
 
 type HomeProps = {};
 
@@ -15,6 +16,7 @@ const Home: FC<HomeProps> = () => {
             <div className="grid xl:grid-cols-[1fr_2fr_1fr] gap-4 grid-cols-1">
                 <Form />
                 <Chart />
+                <Leaderboard />
             </div>
             <h1 className="text-center text-4xl mt-8">
                 Guess ETH / USDT price at 15:00

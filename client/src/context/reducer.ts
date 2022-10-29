@@ -58,6 +58,25 @@ const reducer: Reducer<StateType, AppAction> = (state, action) => {
         };
     }
 
+    if (action.type === AppActionTypes.GET_BET_BEGIN) {
+        return { ...state, isLoading: true };
+    }
+
+    if (action.type === AppActionTypes.GET_BET_SUCCESS) {
+        return {
+            ...state,
+            isLoading: false,
+            bets: action.payload.bets,
+        };
+    }
+
+    if (action.type === AppActionTypes.GET_BET_ERROR) {
+        return {
+            ...state,
+            isLoading: false,
+        };
+    }
+
     return state;
 };
 

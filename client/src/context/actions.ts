@@ -1,3 +1,5 @@
+import { Bet } from '../types/types';
+
 export enum AppActionTypes {
     DISPLAY_ALERT = 'SHOW_ALERT',
     CLEAR_ALERT = 'CLEAR_ALERT',
@@ -6,6 +8,9 @@ export enum AppActionTypes {
     CREATE_BET_BEGIN = 'CREATE_BET_BEGIN',
     CREATE_BET_SUCCESS = 'CREATE_BET_SUCCESS',
     CREATE_BET_ERROR = 'CREATE_BET_ERROR',
+    GET_BET_BEGIN = 'GET_BET_BEGIN',
+    GET_BET_SUCCESS = 'GET_BET_SUCCESS',
+    GET_BET_ERROR = 'GET_BET_ERROR',
 }
 
 type AlertPayload = {
@@ -19,4 +24,7 @@ export type AppAction =
     | { type: AppActionTypes.CLEAR_VALUES }
     | { type: AppActionTypes.CREATE_BET_BEGIN }
     | { type: AppActionTypes.CREATE_BET_SUCCESS }
-    | { type: AppActionTypes.CREATE_BET_ERROR; payload: AlertPayload };
+    | { type: AppActionTypes.CREATE_BET_ERROR; payload: AlertPayload }
+    | { type: AppActionTypes.GET_BET_BEGIN }
+    | { type: AppActionTypes.GET_BET_SUCCESS; payload: { bets: Bet[] } }
+    | { type: AppActionTypes.GET_BET_ERROR };
