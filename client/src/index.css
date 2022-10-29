@@ -3,32 +3,36 @@
 @tailwind utilities;
 
 @layer base {
-
     @font-face {
-        font-family: "Satoshi-Light";
+        font-family: 'Satoshi-Light';
         font-weight: 300;
-        src: url("assets/fonts/Satoshi-Light.woff2");
+        src: url('assets/fonts/Satoshi-Light.woff2');
     }
 
     @font-face {
-        font-family: "Satoshi-Medium";
+        font-family: 'Satoshi-Medium';
         font-weight: 700;
-        src: url("assets/fonts/Satoshi-Medium.woff2");
+        src: url('assets/fonts/Satoshi-Medium.woff2');
     }
 
     @font-face {
-        font-family: "Satoshi-Regular";
+        font-family: 'Satoshi-Regular';
         font-weight: 500;
-        src: url("assets/fonts/Satoshi-Regular.woff2");
+        src: url('assets/fonts/Satoshi-Regular.woff2');
     }
-
-
 
     p {
         font-family: Satoshi-Regular, sans-serif;
     }
 
-    html, body, h1, h2, h3, h4, h5, h6 {
+    html,
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
         font-family: Satoshi-Medium, sans-serif;
     }
 }
