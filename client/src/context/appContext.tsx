@@ -7,6 +7,7 @@ import axios, { AxiosError } from 'axios';
 const URL = import.meta.env.PROD ? '' : 'http://localhost:9000/api';
 
 const initialState: StateType = {
+    currentPrice: '0.00',
     name: '',
     email: '',
     price: 0.01,
@@ -20,6 +21,7 @@ const initialState: StateType = {
     displayAlert: function () {},
     createBet: async function () {},
     getAllBets: async function () {},
+    updateCurrentPrice: function () {},
 };
 
 const AppContext = createContext<StateType>(initialState);
@@ -30,6 +32,10 @@ const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const api = axios.create({
         baseURL: URL,
     });
+
+    const updateCurrentPrice = (price: string) => {
+        dispatch({ type: AppActionTypes.UPDATE_CURRENT_PRICE, payload: { price } });
+    };
 
     const displayAlert = (text: string) => {
         dispatch({ type: AppActionTypes.DISPLAY_ALERT, payload: { text } });
@@ -98,6 +104,7 @@ const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
                 clearValues,
                 createBet,
                 getAllBets,
+                updateCurrentPrice,
             }}
         >
             {children}

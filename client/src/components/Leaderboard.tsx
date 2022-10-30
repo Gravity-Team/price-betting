@@ -2,19 +2,22 @@ import { Table } from 'flowbite-react';
 import { FC, useEffect } from 'react';
 import { useAppContext } from '../context/appContext';
 import { TableRow } from './TableRow';
+import { throttle } from '../utils/throttle';
 
 type LeaderboardProps = {};
 
 const Leaderboard: FC<LeaderboardProps> = () => {
-    const { isLoading, bets, getAllBets } = useAppContext();
+    const { isLoading, bets, getAllBets, updateCurrentPrice } = useAppContext();
 
     useEffect(() => {
         getAllBets().then();
         const ws = new WebSocket('wss://stream.binance.com:9443/ws/ethusdt@trade');
-        ws.onmessage = function (event) {
+        ws.onmessage = throttle((event: any) => {
             const json = JSON.parse(event.data);
-            console.log('price', parseFloat(json.p).toFixed(2));
-        };
+            const price = parseFloat(json.p).toFixed(2);
+            console.log('price', price);
+            updateCurrentPrice(price);
+        }, 2000);
 
         return () => ws.close();
     }, []);

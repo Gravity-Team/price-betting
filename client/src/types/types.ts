@@ -1,4 +1,5 @@
 export type StateType = {
+    currentPrice: string;
     isLoading: boolean;
     showAlert: boolean;
     alertText: string;
@@ -12,6 +13,7 @@ export type StateType = {
     clearValues: () => void;
     createBet: () => Promise<void>;
     getAllBets: () => Promise<void>;
+    updateCurrentPrice: (price: string) => void;
 };
 
 export type Bet = {
@@ -21,4 +23,5 @@ export type Bet = {
     price: string;
     createdAt: string;
     updatedAt: string;
+    diff?: number;
 };

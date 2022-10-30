@@ -1,6 +1,7 @@
 import { Reducer } from 'react';
 import { StateType } from '../types/types';
 import { AppAction, AppActionTypes } from './actions';
+import { sub } from '../utils/subDec';
 
 const reducer: Reducer<StateType, AppAction> = (state, action) => {
     if (action.type === AppActionTypes.DISPLAY_ALERT) {
@@ -74,6 +75,21 @@ const reducer: Reducer<StateType, AppAction> = (state, action) => {
         return {
             ...state,
             isLoading: false,
+        };
+    }
+
+    if (action.type === AppActionTypes.UPDATE_CURRENT_PRICE) {
+        const price = action.payload.price;
+        const sortedBets = state.bets
+            .map((bet) => ({
+                ...bet,
+                diff: Math.abs(sub(Number(price), Number(bet.price))),
+            }))
+            .sort((a, b) => a.diff - b.diff);
+        return {
+            ...state,
+            bets: sortedBets,
+            currentPrice: price,
         };
     }
 
