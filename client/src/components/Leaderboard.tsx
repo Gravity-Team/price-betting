@@ -31,8 +31,8 @@ const Leaderboard: FC<LeaderboardProps> = () => {
                     <Table.HeadCell>Bet</Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
-                    {bets.map((bet) => (
-                        <TableRow key={bet._id} bet={bet} />
+                    {bets.map((bet, index) => (
+                        <TableRow key={bet._id} bet={bet} index={index} />
                     ))}
                 </Table.Body>
             </Table>

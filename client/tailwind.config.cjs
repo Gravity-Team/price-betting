@@ -19,6 +19,8 @@ module.exports = {
         'violet': '#665DCD',
         'blueLight': '#5FA4E6',
         'gold': '#D2AB67',
+        'silver': '#C0C0C0',
+        'bronze': '#b98055',
         'black': '#141619',
       },
     },

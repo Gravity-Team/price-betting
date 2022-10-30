@@ -3,13 +3,23 @@ import { Bet } from '../types/types';
 import { Table } from 'flowbite-react';
 import { dateFormat } from '../utils/dateFormat';
 
-type TableRowProps = { bet: Bet };
+type TableRowProps = { bet: Bet; index: number };
 
-const TableRow: FC<TableRowProps> = ({ bet }) => {
+const TableRow: FC<TableRowProps> = ({ bet, index }) => {
     const { name, _id, price, updatedAt, email, createdAt } = bet;
+    let color = 'bg-white';
+    if (index === 0) {
+        color = 'bg-gold';
+    }
+    if (index === 1) {
+        color = 'bg-silver';
+    }
+    if (index === 2) {
+        color = 'bg-bronze';
+    }
     return (
-        <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+        <Table.Row className={`${color} dark:border-gray-700 dark:bg-gray-800 text-black`}>
+            <Table.Cell className="whitespace-nowrap font-medium dark:text-white">
                 {name}
             </Table.Cell>
             <Table.Cell>{dateFormat(new Date(createdAt))}</Table.Cell>
