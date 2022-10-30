@@ -10,6 +10,13 @@ const Leaderboard: FC<LeaderboardProps> = () => {
 
     useEffect(() => {
         getAllBets().then();
+        const ws = new WebSocket('wss://stream.binance.com:9443/ws/ethusdt@trade');
+        ws.onmessage = function (event) {
+            const json = JSON.parse(event.data);
+            console.log('price', parseFloat(json.p).toFixed(2));
+        };
+
+        return () => ws.close();
     }, []);
 
     return (

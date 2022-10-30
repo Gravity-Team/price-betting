@@ -21,7 +21,10 @@ const Form: FC<FormProps> = () => {
 
     const handleBetInput = (e: ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name;
-        const value = e.target.value;
+        let value = e.target.value;
+        if (e.target.type === 'number') {
+            value = parseFloat(value).toFixed(2);
+        }
         handleChange(name, value);
     };
 
@@ -34,7 +37,6 @@ const Form: FC<FormProps> = () => {
         }
 
         await createBet();
-        console.log({ name, email, price });
     };
 
     return (
