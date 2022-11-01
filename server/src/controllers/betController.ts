@@ -18,12 +18,12 @@ const createBet = async (
     throw new BadRequestError("Please provide all values");
   }
 
-  const now = new Date().getTime();
-  const betsUntil = new Date(new Date().setHours(12, 0, 0, 0)).getTime();
-
-  if (now >= betsUntil) {
-    throw new BadRequestError("Bets for today are over");
-  }
+  // const now = new Date().getTime();
+  // const betsUntil = new Date(new Date().setHours(12, 0, 0, 0)).getTime();
+  //
+  // if (now >= betsUntil) {
+  //   throw new BadRequestError("Bets for today are over");
+  // }
 
   const betExists = await Bet.findOne({
     $and: [
