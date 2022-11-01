@@ -4,7 +4,9 @@ import { reducer } from './reducer';
 import { AppActionTypes } from './actions';
 import axios, { AxiosError } from 'axios';
 
-const URL = import.meta.env.PROD ? '' : 'http://localhost:9000/api';
+const URL = import.meta.env.PROD
+    ? 'http://junction.gravityteam.co/api'
+    : 'http://localhost:9000/api';
 
 const initialState: StateType = {
     currentPrice: '0.00',
