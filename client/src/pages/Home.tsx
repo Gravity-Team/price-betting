@@ -2,12 +2,16 @@ import { FC } from 'react';
 import { Form } from '../components/Form';
 import { Chart } from '../components/Chart';
 import { Leaderboard } from '../components/Leaderboard';
+import logo from '../assets/images/logo-light.png';
 
 type HomeProps = {};
 
 const Home: FC<HomeProps> = () => {
     return (
-        <div className="container mx-auto pt-24">
+        <div className="container mx-auto pt-16">
+            <div className="flex justify-center mb-8">
+                <img src={logo} alt="Gravity Team Logo" />
+            </div>
             <h1 className="text-center text-4xl mb-4">
                 Crypto Betting <br />
                 Win 0.1 ETH Every Day
