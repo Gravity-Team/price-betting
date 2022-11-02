@@ -4,7 +4,25 @@ import { BadRequestError } from "../errors";
 import { StatusCodes } from "../constants/statusCodes";
 
 const getAllBets = async (req: Request, res: Response) => {
-  const bets = await Bet.find({});
+  // 11 hours because stockholm +1, helsinki/riga +2
+  const startTime = new Date(new Date().setHours(11, 0, 0, 0)).setDate(
+    new Date().getDate() - 1
+  );
+  const endTime = new Date().setHours(11, 0, 0, 0);
+  const bets = await Bet.find({
+    $and: [
+      {
+        createdAt: {
+          $gte: startTime,
+        },
+      },
+      {
+        createdAt: {
+          $lte: endTime,
+        },
+      },
+    ],
+  });
   res.json(bets);
 };
 
