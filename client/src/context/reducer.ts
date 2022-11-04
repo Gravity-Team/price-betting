@@ -31,7 +31,7 @@ const reducer: Reducer<StateType, AppAction> = (state, action) => {
             ...state,
             name: '',
             email: '',
-            price: 0.01,
+            price: 1000.01,
         };
     }
 

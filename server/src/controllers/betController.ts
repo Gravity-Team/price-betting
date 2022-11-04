@@ -66,7 +66,7 @@ const createBet = async (
         },
       },
     ],
-    email,
+    $or: [{ email }, { name }],
   });
 
   if (betExists) {
