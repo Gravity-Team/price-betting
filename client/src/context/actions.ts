@@ -29,4 +29,4 @@ export type AppAction =
     | { type: AppActionTypes.GET_BET_BEGIN }
     | { type: AppActionTypes.GET_BET_SUCCESS; payload: { bets: Bet[] } }
     | { type: AppActionTypes.GET_BET_ERROR }
-    | { type: AppActionTypes.UPDATE_CURRENT_PRICE; payload: { price: string } };
+    | { type: AppActionTypes.UPDATE_CURRENT_PRICE; payload: { price: number } };

@@ -4,12 +4,14 @@ import { reducer } from './reducer';
 import { AppActionTypes } from './actions';
 import axios, { AxiosError } from 'axios';
 
-const URL = import.meta.env.PROD
-    ? 'https://junction.gravityteam.co/api'
-    : 'http://localhost:9000/api';
+// const URL = import.meta.env.PROD
+//     ? 'https://junction.gravityteam.co/api'
+//     : 'http://localhost:9000/api';
+
+const URL = 'https://junction.gravityteam.co/api';
 
 const initialState: StateType = {
-    currentPrice: '0.00',
+    currentPrice: .0,
     name: '',
     email: '',
     price: 1000.01,
@@ -35,7 +37,7 @@ const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
         baseURL: URL,
     });
 
-    const updateCurrentPrice = (price: string) => {
+    const updateCurrentPrice = (price: number) => {
         dispatch({ type: AppActionTypes.UPDATE_CURRENT_PRICE, payload: { price } });
     };
 

@@ -83,7 +83,7 @@ const reducer: Reducer<StateType, AppAction> = (state, action) => {
         const sortedBets = state.bets
             .map((bet) => ({
                 ...bet,
-                diff: Math.abs(sub(Number(price), Number(bet.price))),
+                diff: Math.abs(price-Number(bet.price)),
             }))
             .sort((a, b) => a.diff - b.diff);
         return {
