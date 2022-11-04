@@ -12,6 +12,8 @@ export enum AppActionTypes {
     GET_BET_SUCCESS = 'GET_BET_SUCCESS',
     GET_BET_ERROR = 'GET_BET_ERROR',
     UPDATE_CURRENT_PRICE = 'UPDATE_CURRENT_PRICE',
+    UPDATE_LEADERBOARD_STATE = 'UPDATE_LEADERBOARD_STATE',
+    UPDATE_LEADERBOARD_POSITIONS = 'UPDATE_LEADERBOARD_POSITIONS',
 }
 
 type AlertPayload = {
@@ -29,4 +31,6 @@ export type AppAction =
     | { type: AppActionTypes.GET_BET_BEGIN }
     | { type: AppActionTypes.GET_BET_SUCCESS; payload: { bets: Bet[] } }
     | { type: AppActionTypes.GET_BET_ERROR }
-    | { type: AppActionTypes.UPDATE_CURRENT_PRICE; payload: { price: number } };
+    | { type: AppActionTypes.UPDATE_CURRENT_PRICE; payload: { price: number } }
+    | { type: AppActionTypes.UPDATE_LEADERBOARD_STATE }
+    | { type: AppActionTypes.UPDATE_LEADERBOARD_POSITIONS };

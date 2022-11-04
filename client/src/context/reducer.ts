@@ -1,7 +1,6 @@
 import { Reducer } from 'react';
-import { StateType } from '../types/types';
+import { StateType, Winners } from '../types/types';
 import { AppAction, AppActionTypes } from './actions';
-import { sub } from '../utils/subDec';
 
 const reducer: Reducer<StateType, AppAction> = (state, action) => {
     if (action.type === AppActionTypes.DISPLAY_ALERT) {
@@ -79,17 +78,32 @@ const reducer: Reducer<StateType, AppAction> = (state, action) => {
     }
 
     if (action.type === AppActionTypes.UPDATE_CURRENT_PRICE) {
-        const price = action.payload.price;
+        return {
+            ...state,
+            currentPrice: action.payload.price,
+        };
+    }
+
+    if (action.type === AppActionTypes.UPDATE_LEADERBOARD_POSITIONS) {
         const sortedBets = state.bets
             .map((bet) => ({
                 ...bet,
-                diff: Math.abs(price-Number(bet.price)),
+                diff: Math.abs(state.currentPrice - Number(bet.price)),
             }))
             .sort((a, b) => a.diff - b.diff);
         return {
             ...state,
             bets: sortedBets,
-            currentPrice: price,
+        };
+    }
+
+    if (action.type === AppActionTypes.UPDATE_LEADERBOARD_STATE) {
+        return {
+            ...state,
+            leaderboardState:
+                state.leaderboardState === Winners.CURRENT_BETS
+                    ? Winners.LAST_WINNERS
+                    : Winners.CURRENT_BETS,
         };
     }
 

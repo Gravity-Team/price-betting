@@ -1,5 +1,5 @@
 import { createContext, FC, ReactNode, useContext, useReducer } from 'react';
-import { StateType } from '../types/types';
+import { StateType, Winners } from '../types/types';
 import { reducer } from './reducer';
 import { AppActionTypes } from './actions';
 import axios, { AxiosError } from 'axios';
@@ -26,6 +26,9 @@ const initialState: StateType = {
     createBet: async function () {},
     getAllBets: async function () {},
     updateCurrentPrice: function () {},
+    leaderboardState: Winners.CURRENT_BETS,
+    changeLeaderBoardState: function () {},
+    updateLeaderBoardPositions: function () {},
 };
 
 const AppContext = createContext<StateType>(initialState);
