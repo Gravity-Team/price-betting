@@ -14,6 +14,9 @@ export type StateType = {
     createBet: () => Promise<void>;
     getAllBets: () => Promise<void>;
     updateCurrentPrice: (price: string) => void;
+    leaderboardState: Winners;
+    changeLeaderBoardState: () => void;
+    updateLeaderBoardPositions: () => void;
 };
 
 export type Bet = {
@@ -25,3 +28,8 @@ export type Bet = {
     updatedAt: string;
     diff?: number;
 };
+
+export enum Winners {
+    LAST_WINNERS = 'LAST_WINNERS',
+    CURRENT_BETS = 'CURRENT_BETS',
+}

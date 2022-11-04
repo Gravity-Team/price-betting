@@ -1,5 +1,5 @@
 import { createContext, FC, ReactNode, useContext, useReducer } from 'react';
-import { StateType } from '../types/types';
+import { StateType, Winners } from '../types/types';
 import { reducer } from './reducer';
 import { AppActionTypes } from './actions';
 import axios, { AxiosError } from 'axios';
@@ -12,7 +12,7 @@ const initialState: StateType = {
     currentPrice: '0.00',
     name: '',
     email: '',
-    price: 0.01,
+    price: 1000.01,
     bets: [],
     handleChange: function () {},
     clearValues: function () {},
@@ -24,6 +24,9 @@ const initialState: StateType = {
     createBet: async function () {},
     getAllBets: async function () {},
     updateCurrentPrice: function () {},
+    leaderboardState: Winners.CURRENT_BETS,
+    changeLeaderBoardState: function () {},
+    updateLeaderBoardPositions: function () {},
 };
 
 const AppContext = createContext<StateType>(initialState);
@@ -37,6 +40,7 @@ const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
     const updateCurrentPrice = (price: string) => {
         dispatch({ type: AppActionTypes.UPDATE_CURRENT_PRICE, payload: { price } });
+        updateLeaderBoardPositions();
     };
 
     const displayAlert = (text: string) => {
@@ -84,8 +88,13 @@ const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const getAllBets = async () => {
         dispatch({ type: AppActionTypes.GET_BET_BEGIN });
         try {
-            const { data } = await api.get('/bets');
+            const config = { params: { winners: 'last' } };
+            const { data } = await api.get(
+                '/bets',
+                state.leaderboardState === Winners.LAST_WINNERS ? config : {}
+            );
             dispatch({ type: AppActionTypes.GET_BET_SUCCESS, payload: { bets: data } });
+            updateLeaderBoardPositions();
         } catch (err) {
             if (err instanceof AxiosError) {
                 if (err.response?.status !== 401) {
@@ -95,6 +104,14 @@ const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
                 }
             }
         }
+    };
+
+    const updateLeaderBoardState = () => {
+        dispatch({ type: AppActionTypes.UPDATE_LEADERBOARD_STATE });
+    };
+
+    const updateLeaderBoardPositions = () => {
+        dispatch({ type: AppActionTypes.UPDATE_LEADERBOARD_POSITIONS });
     };
 
     return (
@@ -107,6 +124,8 @@ const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
                 createBet,
                 getAllBets,
                 updateCurrentPrice,
+                changeLeaderBoardState: updateLeaderBoardState,
+                updateLeaderBoardPositions,
             }}
         >
             {children}
