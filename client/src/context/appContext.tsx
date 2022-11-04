@@ -12,7 +12,7 @@ const initialState: StateType = {
     currentPrice: '0.00',
     name: '',
     email: '',
-    price: 0.01,
+    price: 1000.01,
     bets: [],
     handleChange: function () {},
     clearValues: function () {},

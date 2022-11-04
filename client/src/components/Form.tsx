@@ -22,9 +22,9 @@ const Form: FC<FormProps> = () => {
     const handleBetInput = (e: ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name;
         let value = e.target.value;
-        if (e.target.type === 'number') {
-            value = parseFloat(value).toFixed(2);
-        }
+        // if (e.target.type === 'number') {
+        //     value = parseFloat(value).toFixed(2);
+        // }
         handleChange(name, value);
     };
 
