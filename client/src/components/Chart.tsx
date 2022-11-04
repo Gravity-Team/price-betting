@@ -9,8 +9,8 @@ const Chart: FC<ChartProps> = () => {
             <AdvancedRealTimeChart
                 autosize={true}
                 symbol="BINANCE:ETHUSD"
-                range="5D"
-                interval="D"
+                range="1D"
+                interval="1"
                 timezone="Europe/Helsinki"
                 theme="dark"
                 style="1"

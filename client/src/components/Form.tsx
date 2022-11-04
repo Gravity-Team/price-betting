@@ -22,10 +22,8 @@ const Form: FC<FormProps> = () => {
     const handleBetInput = (e: ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name;
         let value = e.target.value;
-        // if (name === 'price') {
-        //     const regex = /^\d*(\.\d{0,2})?$/g;
-        //     // value = parseFloat(value).toFixed(2);
-        //     value = regex.test(value) ? value : price;
+        // if (e.target.type === 'number') {
+        //     value = parseFloat(value).toFixed(2);
         // }
         handleChange(name, value);
     };
