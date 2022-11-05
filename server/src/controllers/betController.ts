@@ -48,20 +48,27 @@ const createBet = async (
   //   throw new BadRequestError("Bets for today are over");
   // }
 
+  const hour = new Date().getHours();
+  let start = new Date().setHours(11, 0, 0, 0)
+  if(hour < 11){
+    start -= DAY
+  }
+  const end = start + DAY
+
   const betExists = await Bet.findOne({
     $and: [
       {
         createdAt: {
-          $gte: new Date().setUTCHours(0, 0, 0, 0),
+          $gte: new Date(start),
         },
       },
       {
         createdAt: {
-          $lte: new Date().setUTCHours(23, 59, 59, 999),
+          $lte: new Date(end),
         },
       },
     ],
-    $or: [{ email }, { name }],
+    email,
   });
 
   if (betExists) {
