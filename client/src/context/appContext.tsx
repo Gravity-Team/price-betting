@@ -4,11 +4,11 @@ import { reducer } from './reducer';
 import { AppActionTypes } from './actions';
 import axios, { AxiosError } from 'axios';
 
-// const URL = import.meta.env.PROD
-//     ? 'https://junction.gravityteam.co/api'
-//     : 'http://localhost:9000/api';
+const URL = import.meta.env.PROD
+    ? 'https://junction.gravityteam.co/api'
+    : 'http://localhost:9000/api';
 
-const URL = 'https://junction.gravityteam.co/api';
+// const URL = 'https://junction.gravityteam.co/api';
 
 const initialState: StateType = {
     currentPrice: 0.0,
@@ -90,7 +90,11 @@ const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const getAllBets = async () => {
         dispatch({ type: AppActionTypes.GET_BET_BEGIN });
         try {
-            const { data } = await api.get('/bets');
+            const config = { params: { bets: 'last' } };
+            const { data } = await api.get(
+                '/bets',
+                state.leaderboardState === Winners.LAST_WINNERS ? config : {}
+            );
             dispatch({ type: AppActionTypes.GET_BET_SUCCESS, payload: { bets: data } });
             updateLeaderBoardPositions();
         } catch (err) {

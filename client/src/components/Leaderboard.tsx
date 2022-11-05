@@ -77,7 +77,7 @@ const Leaderboard: FC<LeaderboardProps> = () => {
                     onClick={changeLeaderBoardState}
                     disabled={leaderboardState === Winners.LAST_WINNERS}
                 >
-                    Last Winners
+                    Last Bets
                 </Button>
                 <Button
                     className="disabled:bg-violet disabled:opacity-100 disabled:text-white disabled:hover:text-black"
