@@ -40,7 +40,8 @@ const Leaderboard: FC<LeaderboardProps> = () => {
         };
 
         const ws = new WebSocket('wss://stream.binance.com:9443/ws/ethusdt@trade');
-        if (leaderboardState === Winners.LAST_WINNERS) {
+
+        if (leaderboardState === Winners.LAST_WINNERS && new Date().getHours() >= hoursLimit) {
             ws.close();
             const dayInMs = 24 * 60 * 60 * 1000;
             getCurrentPriceFromBinance(hoursLimit, dayInMs).then((data) => {
@@ -48,22 +49,21 @@ const Leaderboard: FC<LeaderboardProps> = () => {
                 // updateLeaderBoardPositions();
             });
         }
-        if (leaderboardState === Winners.CURRENT_BETS) {
-            ws.onmessage = throttle(async (event: any) => {
-                const json = JSON.parse(event.data);
-                const price = parseFloat(json.p);
-                // const time = new Date().getHours();
-                // if (time >= hoursLimit) {
-                //     ws.close();
-                //     const binancePrice = await getCurrentPriceFromBinance(hoursLimit);
-                //     updateCurrentPrice(binancePrice[0][4]);
-                //     // updateLeaderBoardPositions();
-                //     return;
-                // }
-                updateCurrentPrice(price);
-                // updateLeaderBoardPositions();
-            }, 2000);
-        }
+
+        ws.onmessage = throttle(async (event: any) => {
+            const json = JSON.parse(event.data);
+            const price = parseFloat(json.p);
+            // const time = new Date().getHours();
+            // if (time >= hoursLimit) {
+            //     ws.close();
+            //     const binancePrice = await getCurrentPriceFromBinance(hoursLimit);
+            //     updateCurrentPrice(binancePrice[0][4]);
+            //     // updateLeaderBoardPositions();
+            //     return;
+            // }
+            updateCurrentPrice(price);
+            // updateLeaderBoardPositions();
+        }, 2000);
 
         return () => ws.close();
     }, [leaderboardState]);
