@@ -24,44 +24,33 @@ const Leaderboard: FC<LeaderboardProps> = () => {
 
         const hoursLimit = 15;
 
-        const getCurrentPriceFromBinance = async (hoursLimit: number, dayOffsetInMs = 0) => {
-            const startTime = new Date().setHours(hoursLimit - 1, 0, 0, 0) - dayOffsetInMs;
-            const endTime = new Date().setHours(hoursLimit, 0, 0, 10) - dayOffsetInMs;
+        const getCurrentPriceFromBinance = async (hoursLimit: number) => {
+            const startTime = new Date().setHours(hoursLimit - 1, 0, 0, 0);
+            const params = {
+                symbol: 'ETHUSDT',
+                interval: '1h',
+                startTime,
+                limit: 1,
+            }
             const { data } = await axios.get('https://api.binance.com/api/v3/klines', {
-                params: {
-                    symbol: 'ETHUSDT',
-                    interval: '1h',
-                    startTime,
-                    // endTime,
-                    limit: 1,
-                },
+                params,
             });
             return data;
         };
 
+        const time = new Date().getHours();
         const ws = new WebSocket('wss://stream.binance.com:9443/ws/ethusdt@trade');
-        if (leaderboardState === Winners.LAST_WINNERS) {
-            ws.close();
-            const dayInMs = 24 * 60 * 60 * 1000;
-            getCurrentPriceFromBinance(hoursLimit, dayInMs).then((data) => {
+        if (leaderboardState === Winners.LAST_WINNERS && time >= hoursLimit) {
+            ws.onmessage = null;
+            getCurrentPriceFromBinance(hoursLimit).then((data) => {
                 updateCurrentPrice(data[0][4]);
-                // updateLeaderBoardPositions();
             });
         }
-        if (leaderboardState === Winners.CURRENT_BETS) {
+        else{
             ws.onmessage = throttle(async (event: any) => {
-                const json = JSON.parse(event.data);
-                const price = parseFloat(json.p);
-                // const time = new Date().getHours();
-                // if (time >= hoursLimit) {
-                //     ws.close();
-                //     const binancePrice = await getCurrentPriceFromBinance(hoursLimit);
-                //     updateCurrentPrice(binancePrice[0][4]);
-                //     // updateLeaderBoardPositions();
-                //     return;
-                // }
-                updateCurrentPrice(price);
-                // updateLeaderBoardPositions();
+            const json = JSON.parse(event.data);
+            const price = parseFloat(json.p);
+            updateCurrentPrice(price);
             }, 2000);
         }
 
