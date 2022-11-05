@@ -3,27 +3,34 @@ import { Bet } from "../models/Bet";
 import { BadRequestError } from "../errors";
 import { StatusCodes } from "../constants/statusCodes";
 
-const DAY = 24*3600*1000
+const DAY = 24 * 3600 * 1000;
 
-const getAllBets = async (req: Request, res: Response) => {
-  // 11 hours because stockholm +1, helsinki/riga +2
+const getAllBets = async (
+  req: Request<{}, {}, {}, { bets: string }>,
+  res: Response
+) => {
+  // 12 (local machine)
+  // 10 hours because of UTC (server)
   const hour = new Date().getHours();
-  let start = new Date().setHours(11, 0, 0, 0)
-  if(hour < 11){
-    start -= DAY
+  let start = new Date().setHours(10, 0, 0, 0);
+  if (hour < 10) {
+    start -= DAY;
   }
-  const end = start + DAY
+  if (req.query.bets === "last") {
+    start -= DAY;
+  }
+  const end = start + DAY;
 
   const bets = await Bet.find({
     $and: [
       {
         createdAt: {
-          $gte: new Date(start),
+          $gte: start,
         },
       },
       {
         createdAt: {
-          $lte: new Date(end),
+          $lte: end,
         },
       },
     ],

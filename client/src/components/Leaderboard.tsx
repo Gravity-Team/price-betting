@@ -25,14 +25,15 @@ const Leaderboard: FC<LeaderboardProps> = () => {
         const hoursLimit = 15;
 
         const getCurrentPriceFromBinance = async (hoursLimit: number, dayOffsetInMs = 0) => {
-            const startTime = new Date().setHours(hoursLimit, 0, 0, 0) - dayOffsetInMs;
+            const startTime = new Date().setHours(hoursLimit - 1, 0, 0, 0) - dayOffsetInMs;
             const endTime = new Date().setHours(hoursLimit, 0, 0, 10) - dayOffsetInMs;
             const { data } = await axios.get('https://api.binance.com/api/v3/klines', {
                 params: {
                     symbol: 'ETHUSDT',
-                    interval: '1s',
+                    interval: '1h',
                     startTime,
-                    endTime,
+                    // endTime,
+                    limit: 1,
                 },
             });
             return data;
@@ -76,7 +77,7 @@ const Leaderboard: FC<LeaderboardProps> = () => {
                     onClick={changeLeaderBoardState}
                     disabled={leaderboardState === Winners.LAST_WINNERS}
                 >
-                    Last Winners
+                    Last Bets
                 </Button>
                 <Button
                     className="disabled:bg-violet disabled:opacity-100 disabled:text-white disabled:hover:text-black"
