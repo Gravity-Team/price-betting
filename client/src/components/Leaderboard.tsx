@@ -16,7 +16,7 @@ const Leaderboard: FC<LeaderboardProps> = () => {
         updateCurrentPrice,
         leaderboardState,
         changeLeaderBoardState,
-        currentPrice
+        currentPrice,
     } = useAppContext();
 
     useEffect(() => {
@@ -89,12 +89,17 @@ const Leaderboard: FC<LeaderboardProps> = () => {
             </Button.Group>
             <div className="max-h-[440px] overflow-y-auto">
                 <Table hoverable={true}>
+                    <Table.Head className="bg-violet">
+                        <Table.HeadCell colSpan={12} className="text-center text-lg text-white">
+                            {currentPrice}
+                        </Table.HeadCell>
+                    </Table.Head>
                     <Table.Head>
                         <Table.HeadCell>Name</Table.HeadCell>
                         <Table.HeadCell>Time</Table.HeadCell>
                         <Table.HeadCell>Bet</Table.HeadCell>
                     </Table.Head>
-                    <div>{currentPrice}</div>
+                    {/*<div>{currentPrice}</div>*/}
                     <Table.Body className="divide-y">
                         {bets.map((bet, index) => (
                             <TableRow key={bet._id} bet={bet} index={index} />

@@ -11,7 +11,7 @@ import axios, { AxiosError } from 'axios';
 const URL = 'https://junction.gravityteam.co/api';
 
 const initialState: StateType = {
-    currentPrice: .0,
+    currentPrice: 0.0,
     name: '',
     email: '',
     price: 1000.01,
@@ -42,6 +42,7 @@ const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
     const updateCurrentPrice = (price: number) => {
         dispatch({ type: AppActionTypes.UPDATE_CURRENT_PRICE, payload: { price } });
+        updateLeaderBoardPositions();
     };
 
     const displayAlert = (text: string) => {
@@ -91,6 +92,7 @@ const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
         try {
             const { data } = await api.get('/bets');
             dispatch({ type: AppActionTypes.GET_BET_SUCCESS, payload: { bets: data } });
+            updateLeaderBoardPositions();
         } catch (err) {
             if (err instanceof AxiosError) {
                 if (err.response?.status !== 401) {
@@ -100,6 +102,14 @@ const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
                 }
             }
         }
+    };
+
+    const changeLeaderBoardState = () => {
+        dispatch({ type: AppActionTypes.UPDATE_LEADERBOARD_STATE });
+    };
+
+    const updateLeaderBoardPositions = () => {
+        dispatch({ type: AppActionTypes.UPDATE_LEADERBOARD_POSITIONS });
     };
 
     return (
@@ -112,6 +122,7 @@ const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
                 createBet,
                 getAllBets,
                 updateCurrentPrice,
+                changeLeaderBoardState,
             }}
         >
             {children}
